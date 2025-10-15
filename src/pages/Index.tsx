@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import logo from "@/assets/logo-principal.png";
+import { PreLaunchForm } from "@/components/PreLaunchForm";
 
 const Index = () => {
   useEffect(() => {
@@ -42,24 +43,9 @@ const Index = () => {
           {/* Form Container */}
           <div className="w-full max-w-xl mx-auto animate-fade-in-delayed">
             <div className="bg-card rounded-2xl shadow-lg border border-border p-6 md:p-8 transition-all hover:shadow-xl">
-              {/* Form iframe placeholder */}
-              <div className="relative w-full" style={{ minHeight: '500px' }}>
-                <iframe 
-                  src="URL_DO_SEU_FORMULARIO_AQUI" 
-                  className="w-full rounded-lg"
-                  style={{ 
-                    height: '500px',
-                    border: 'none',
-                    backgroundColor: 'transparent'
-                  }}
-                  title="Formulário de Cadastro"
-                  loading="lazy"
-                >
-                  Carregando formulário...
-                </iframe>
-              </div>
+              <PreLaunchForm />
               
-              <p className="text-xs text-muted-foreground mt-4 text-center">
+              <p className="text-xs text-muted-foreground mt-6 text-center">
                 Seus dados estão seguros conosco e não serão compartilhados.
               </p>
             </div>
