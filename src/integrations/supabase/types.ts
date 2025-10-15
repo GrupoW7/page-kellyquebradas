@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      pre_lancamento_cadastros: {
+        Row: {
+          aceitar_lgpd: boolean
+          aceitar_notificacoes: boolean
+          celular: string
+          created_at: string
+          email: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          aceitar_lgpd: boolean
+          aceitar_notificacoes?: boolean
+          celular: string
+          created_at?: string
+          email: string
+          id?: string
+          nome: string
+        }
+        Update: {
+          aceitar_lgpd?: boolean
+          aceitar_notificacoes?: boolean
+          celular?: string
+          created_at?: string
+          email?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

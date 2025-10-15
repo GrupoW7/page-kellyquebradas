@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   nome: z
@@ -80,10 +81,29 @@ export const PreLaunchForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Simula envio - aqui você pode integrar com sua API/Backend
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log("Dados do formulário:", data);
+      const { error } = await supabase
+        .from('pre_lancamento_cadastros')
+        .insert([
+          {
+            nome: data.nome,
+            email: data.email,
+            celular: data.celular,
+            aceitar_notificacoes: data.aceitarNotificacoes || false,
+            aceitar_lgpd: data.aceitarLGPD,
+          }
+        ]);
+
+      if (error) {
+        // Verifica se é erro de email duplicado
+        if (error.code === '23505') {
+          toast.error("Este e-mail já está cadastrado!", {
+            description: "Você já está na lista de pré-lançamento."
+          });
+        } else {
+          throw error;
+        }
+        return;
+      }
       
       toast.success("Cadastro realizado com sucesso!", {
         description: "Você receberá em breve informações sobre o lançamento."
@@ -91,6 +111,7 @@ export const PreLaunchForm = () => {
       
       form.reset();
     } catch (error) {
+      console.error("Erro ao salvar cadastro:", error);
       toast.error("Erro ao realizar cadastro", {
         description: "Por favor, tente novamente."
       });
@@ -107,10 +128,10 @@ export const PreLaunchForm = () => {
           control={form.control}
           name="nome"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-foreground font-medium">
-                Nome Completo <span className="text-destructive">*</span>
-              </FormLabel>
+          <FormItem>
+            <FormLabel className="text-foreground font-medium text-left block">
+              Nome Completo <span className="text-destructive">*</span>
+            </FormLabel>
               <FormControl>
                 <Input
                   placeholder="Digite seu nome completo"
@@ -128,10 +149,10 @@ export const PreLaunchForm = () => {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-foreground font-medium">
-                E-mail <span className="text-destructive">*</span>
-              </FormLabel>
+          <FormItem>
+            <FormLabel className="text-foreground font-medium text-left block">
+              E-mail <span className="text-destructive">*</span>
+            </FormLabel>
               <FormControl>
                 <Input
                   type="email"
@@ -150,10 +171,10 @@ export const PreLaunchForm = () => {
           control={form.control}
           name="celular"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-foreground font-medium">
-                Celular <span className="text-destructive">*</span>
-              </FormLabel>
+          <FormItem>
+            <FormLabel className="text-foreground font-medium text-left block">
+              Celular <span className="text-destructive">*</span>
+            </FormLabel>
               <FormControl>
                 <Input
                   placeholder="(11) 98765-4321"
