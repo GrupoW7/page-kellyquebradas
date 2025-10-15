@@ -14,8 +14,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Card, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
@@ -65,6 +66,7 @@ const formatPhoneNumber = (value: string) => {
 
 export const PreLaunchForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -105,11 +107,11 @@ export const PreLaunchForm = () => {
         return;
       }
       
+      // Sucesso!
+      setIsSubmitted(true);
       toast.success("Cadastro realizado com sucesso!", {
         description: "Você receberá em breve informações sobre o lançamento."
       });
-      
-      form.reset();
     } catch (error) {
       console.error("Erro ao salvar cadastro:", error);
       toast.error("Erro ao realizar cadastro", {
@@ -119,6 +121,37 @@ export const PreLaunchForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  // Card de sucesso
+  if (isSubmitted) {
+    return (
+      <Card className="border-primary/20 shadow-lg animate-fade-in">
+        <CardContent className="pt-10 pb-10">
+          <div className="text-center space-y-6">
+            <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+              <CheckCircle2 className="w-10 h-10 text-primary" />
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="text-2xl font-bold text-foreground">
+                Cadastro Realizado!
+              </h3>
+              <p className="text-muted-foreground">
+                Obrigado por se cadastrar! Você receberá em breve 
+                informações exclusivas sobre o lançamento.
+              </p>
+            </div>
+            
+            <div className="pt-4 border-t border-border">
+              <p className="text-sm text-muted-foreground">
+                Fique de olho no seu e-mail 📧
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Form {...form}>
