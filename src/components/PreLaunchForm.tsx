@@ -122,25 +122,25 @@ export const PreLaunchForm = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         {/* Nome */}
         <FormField
           control={form.control}
           name="nome"
           render={({ field }) => (
-          <FormItem>
+          <FormItem className="space-y-3">
             <FormLabel className="text-foreground font-medium text-left block">
               Nome Completo <span className="text-destructive">*</span>
             </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Digite seu nome completo"
-                  {...field}
-                  className="h-12"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormControl>
+              <Input
+                placeholder="Digite seu nome completo"
+                {...field}
+                className="h-12"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           )}
         />
 
@@ -149,20 +149,20 @@ export const PreLaunchForm = () => {
           control={form.control}
           name="email"
           render={({ field }) => (
-          <FormItem>
+          <FormItem className="space-y-3">
             <FormLabel className="text-foreground font-medium text-left block">
               E-mail <span className="text-destructive">*</span>
             </FormLabel>
-              <FormControl>
-                <Input
-                  type="email"
-                  placeholder="seu@email.com"
-                  {...field}
-                  className="h-12"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormControl>
+              <Input
+                type="email"
+                placeholder="seu@email.com"
+                {...field}
+                className="h-12"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           )}
         />
 
@@ -171,24 +171,24 @@ export const PreLaunchForm = () => {
           control={form.control}
           name="celular"
           render={({ field }) => (
-          <FormItem>
+          <FormItem className="space-y-3">
             <FormLabel className="text-foreground font-medium text-left block">
               Celular <span className="text-destructive">*</span>
             </FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="(11) 98765-4321"
-                  {...field}
-                  onChange={(e) => {
-                    const formatted = formatPhoneNumber(e.target.value);
-                    field.onChange(formatted);
-                  }}
-                  maxLength={16}
-                  className="h-12"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormControl>
+              <Input
+                placeholder="(11) 98765-4321"
+                {...field}
+                onChange={(e) => {
+                  const formatted = formatPhoneNumber(e.target.value);
+                  field.onChange(formatted);
+                }}
+                maxLength={16}
+                className="h-12"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
           )}
         />
 
